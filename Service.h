@@ -1,15 +1,17 @@
 //
 // Created by DELL on 9/30/2023.
 //
-    #include "ctime"
+#include "ctime"
 #include "iostream"
+
 void showTime(tm *ltm) {  //Function to show date and time
-    cout << "Year: " <<  ltm->tm_year << endl;
+    cout << "Year: " << ltm->tm_year << endl;
     cout << "Month: " << ltm->tm_mon << endl;
     cout << "Day: " << ltm->tm_mday << endl;
 };
 //dc roi
 #include "time.h"
+
 using namespace std;
 
 class Service : public Item {
@@ -17,7 +19,7 @@ private:
     tm *usingTimeStart;  //Create first point time;
     tm *usingTimeEnd;   //Create end point using time
 
-    double calculateTimeDuration(tm *a, tm *b) {
+    static double calculateTimeDuration(tm *a, tm *b) {
 //        showTime(a);
         double dayYear = (a->tm_year - b->tm_year);
         double dayMonth = 0;
@@ -53,29 +55,32 @@ private:
 
 public:
     double duration;
+
     Service(const string &id, const string &name, double unitPrice, const string &category) : Item(id, name, unitPrice,
                                                                                                    category) {
         time_t now = time(0);
         usingTimeStart = localtime(&now);
-        usingTimeStart->tm_year=  usingTimeStart->tm_year+1900;
-        usingTimeStart->tm_mon=  usingTimeStart->tm_mon+1;
+        usingTimeStart->tm_year = usingTimeStart->tm_year + 1900;
+        usingTimeStart->tm_mon = usingTimeStart->tm_mon + 1;
         usingTimeEnd = generateEndTimeUsing();
         duration = calculateTimeDuration(usingTimeEnd, usingTimeStart);
     }
-    void showTimeEnd(){
-            cout<<usingTimeEnd->tm_year<<endl;
-        cout<<usingTimeEnd->tm_mon<<endl;
-        cout<<usingTimeEnd->tm_mday;
+
+    void showTimeEnd() {
+        cout << usingTimeEnd->tm_year << endl;
+        cout << usingTimeEnd->tm_mon << endl;
+        cout << usingTimeEnd->tm_mday;
     }
 
-    double calculatePrice() override {
+    double calculatePrice() const override {
         return calculateTimeDuration(usingTimeEnd, usingTimeStart) * unitPrice;
-
     }
-    void showItemInfo() override{
+
+    void showItemInfo() const override {
         cout << "ID: " << ID << endl;
         cout << "Name: " << name << endl;
         cout << "Unit Price: " << unitPrice << endl;
         cout << "Duration: " << calculateTimeDuration(usingTimeEnd, usingTimeStart);
     }
 };
+

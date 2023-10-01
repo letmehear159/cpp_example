@@ -25,7 +25,7 @@ private:
     string state;
     string zipcode;
     string country;
-    vector<Order> *orderList = new vector<Order>();  //a list contains many orders
+    vector<Order> orderList;  //a list contains many orders
 public:
 
     Customer(string id, string firstName, string lastName, string phoneNumber, string address, string city,
@@ -33,10 +33,12 @@ public:
              string zipcode, string country) : ID(id), firstName(firstName), lastName(lastName),
                                                phoneNumber(phoneNumber),
                                                address(address), city(city), state(state), zipcode(zipcode),
-                                               country(country) {}
+                                               country(country) {
+    }
 
+    Customer() {};
 
-     string getId()  {
+    string getId() {
         return ID;
     }
 
@@ -44,27 +46,24 @@ public:
         return city;
     }
 
-    Order getOrderById(string id) {
-        for (Order p: *orderList) {
-            if (p.getId() == id)
-                return p;
+    Order *getOrderById(string id) {
+        for (Order &p: orderList) {
+            if (p.getId() == id) {
+                return &p;
+            }
         }
     }
 
     vector<Order> getOrderList() {
-        return *orderList;
+        return orderList;
     }
 
-    void addItemToOrder(Item *newItem, string orderId) {
-        for (Order order: *orderList) {
-            if (order.getId() == orderId) {
-                order.addItem(newItem);
-                cout << "Add item successfully" << endl;
-                return;
-            }
-        }
-        cout << "Add item failed" << endl;
+    void createNewOrder(string orderId) {
+        Order order(orderId);
+        orderList.push_back(order);
     }
+//
+
 
 
     void customerInfo() {
@@ -79,37 +78,37 @@ public:
     }     //Show customer Info
 
 
-    void showAllOrderOfEachCustomer() {
-        for (Order p: *orderList) {
-            p.orderInfo();
-            cout << endl;
-        }
-    }         //Display orderList of each customer;
-
-    void addOrder(Order newOrder) {
-        orderList->push_back(newOrder);
-
-
-//    double totalMoneyPaid(){
-//        double sum = 0;
-//        for (Order p: *orderList) {
-//            sum += p.totalPrice();
+//    void showAllOrderOfEachCustomer() {
+//        for (Order p: orderList) {
+//            p.orderInfo();
+//            cout << endl;
 //        }
-//        return sum;
-//    }       //Total money which a customer pay;
+//    }         //Display orderList of each customer;
+//
+    void addOrder(Order &newOrder) {
+        orderList.push_back(newOrder);
+    }
+
+
+    double totalMoneyPaid(){
+        double sum = 0;
+        for (Order p: orderList) {
+            sum += p.calculatePriceOfOrder();
+        }
+        return sum;
+    }       //Total money which a customer pay;
 
 
 //    }  //add a new order to the order list
 //    double PriceOfEachOrder();
-    };
 
 
-    double totalPriceOfCustomerPaid() {
-        double sum = 0;
-        for (Order p: *orderList) {
-            sum += p.calculatePriceOfOrder();
-        }
-        return sum;
-    }
+//    double totalPriceOfCustomerPaid() {
+//        double sum = 0;
+//        for (Order p: orderList) {
+//            sum += p.calculatePriceOfOrder();
+//        }
+//        return sum;
+//    }
 };
 

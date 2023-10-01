@@ -11,12 +11,16 @@ protected:
     double unitPrice;
     string category;
 public:
-    Item( string id,  string name, double unitPrice,  string category) :
-    ID(id), name(name),unitPrice(unitPrice),category(category) {}
-    Item(){};
+    Item(string id, string name, double unitPrice, string category) :
+            ID(id), name(name), unitPrice(unitPrice), category(category) {}
 
-    virtual double calculatePrice() {}
-    virtual void showItemInfo(){};
+    Item() {};
+
+    virtual ~Item() {}
+
+    virtual double calculatePrice() const = 0;
+
+    virtual void showItemInfo() const = 0;
 
 };
 

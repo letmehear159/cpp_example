@@ -10,16 +10,16 @@ class Product : public Item {
 private:
     int quantity;
 public:
-    Product( string id,  string name, double unitPrice,  string category, int quantity) :
-    Item(id,  name,unitPrice,category),quantity(quantity) {}
+    Product(string id, string name, double unitPrice, string category, int quantity) :
+            Item(id, name, unitPrice, category), quantity(quantity) {}
 
-    Product(){}
+    Product() {}
 
-    double calculatePrice() override {
+    double calculatePrice() const override {
         return quantity * unitPrice;
     }         //Caculate price of and product=quantiy*unitPrice;
 
-    void showItemInfo() override{
+    void showItemInfo() const override {
         cout << "ID: " << ID << endl;
         cout << "Name: " << name << endl;
         cout << "Unit Price: " << unitPrice << endl;

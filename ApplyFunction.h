@@ -4,18 +4,18 @@ using namespace std;
 #include "ctime"
 #include "stdio.h"
 //Customer findCustomerThroughOrderID(string orderID, vector<Customer> customerList);
-Customer findCustomerThroughOrderID(string orderID, vector<Customer> customerList) {
-    for (Customer customerIndex: customerList) {        ///Traverse customerList
-        for (Order orderIndex: customerIndex.getOrderList()) {      ///Traverse orderList
-            if (orderIndex.getId() == orderID) {
-                return customerIndex;
-            }
-        }
-    }
-    cout << "Doesnt exist";
-    Customer a("", "", "", "", "", "", "", "", "");
-    return a;
-}
+//Customer findCustomerThroughOrderID(string orderID, vector<Customer> customerList) {
+//    for (Customer customerIndex: customerList) {        ///Traverse customerList
+//        for (Order orderIndex: customerIndex.getOrderList()) {      ///Traverse orderList
+//            if (orderIndex.getId() == orderID) {
+//                return customerIndex;
+//            }
+//        }
+//    }
+//    cout << "Doesnt exist";
+//    Customer a("", "", "", "", "", "", "", "", "");
+//    return a;
+//}
 
 
 

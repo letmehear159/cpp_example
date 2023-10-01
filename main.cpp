@@ -12,6 +12,10 @@
 
 using namespace std;
 
+void addItem(Product newItem, vector<Item *> itemList) {
+    itemList.push_back(&newItem);
+}
+
 int main() {
     int customerNumber = 0, itemNumber = 0;
     char ch;
@@ -20,21 +24,55 @@ int main() {
 ////    vector<Customer> customerList;          // a list of customer
 //    Customer customer("10", "Ho Chi Minh", " ", "", "", "", "", "", "");
 //    Customer truyen("11", "Ho Chi Minh,"" ", "", "", "", "", "", "", "");
-//    Customer truong("11", "Ho Chi Minh,"" ", "", "", "", "", "", "", "");
-    CustomerList customerList;
-//    Order order("23");
-//    truong.addOrder(order);
+//    Customer truong("22", "Ho Chi Minh,"" ", "", "", "", "", "", "", "");
+    CustomerList listCustomer;
+//    listCustomer.addCustomerToList(&truong)  ;
+//////    customerList.addCustomerToList(truong);
+//////    customerList.addCustomerToList(truyen);
+//////    customerList.addCustomerToList(customer);
+//    Order orderr("22");
+//////
+//
+////    orderr.showItemList();
+//    truong.addOrder(orderr);
+//
+//    Product product("32323", "abc", 232, "", 2);
+//    Service service("32323", "abc", 22, "");
+//    orderr.addItem(&product);
+
+//    orderr.addItem(&product);
+//    orderr.addItem(product);
+////    orderr.addItem(&service);
+//    Item *itemptr;
+//    itemptr=&product;
+//    itemptr->showItemInfo();
+
+//
+//    for(Item *item:orderr.getItemList()){
+//        item->showItemInfo();
+//    }
+//    orderr.showItemList();
+//    Customer customerByIDD = customerList.findCustomerByID("23");
+//    Order orderByIDD = customerByIDD.getOrderById("23");
+//    orderByIDD.showItemList();
+    //    Order k=truong.getOrderById("23");
+//    k.orderInfo();
+//    orderByID.showItemList();
+//    vector<Order> *kk=new vector<Order>;
+//    kk->push_back(order);
 //    customerList.addCustomerToList(customer);
 //    customerList.addCustomerToList(truyen);
 //    customerList.addCustomerToList(truong);
-////    cout << endl << "Number of customer in HCM: " << customerList.getTotalCustomerInCity("Ho Chi Minh") << endl;
-//    Product product("32323", "abc", 232, "", 2);
+//////    cout << endl << "Number of customer in HCM: " << customerList.getTotalCustomerInCity("Ho Chi Minh") << endl;
 //    Service service("32323", "abc", 2, "");
 //    cout << endl;
-////    service.showItemInfo();
+//////    service.showItemInfo();
 //    cout << endl;
-//    order.addItem(&product);
-//    order.addItem(&service);
+//    Product *myP=new Product();
+//    myP=&product;
+//    order.addItem(myP);
+
+
 //    Customer myco = customerList.findCustomerByID("23");
 //    Order co = myco.getOrderById("23");
 //    string idd, namee, orderIDD;
@@ -59,8 +97,8 @@ int main() {
 //    order.showItemList();
 //    customer.addOrder(order);
 //    vector<Order> orderList = customer.getOrderList();
-
-
+//    Product productTesting("33", "33", 3, "3", 3);
+//    vector
 //    string id, firstName, lastName, phoneNumber, city, country;
 //    readCustomerFromFile(id, firstName, lastName, phoneNumber, city, country, 0);
 //    string itemId, name, orderID;
@@ -79,9 +117,31 @@ int main() {
 //    c.showItemList();
 //    a.addItem(&b,orderID);
 //    c.showItemList();
-    Product* testProduct=new Product();
-    if (1 == 1) {
+    vector<Product *> productList;
+    for (int i = 0; i < 2; i++) {
+        Product *nowProduct = new Product();
+        productList.push_back(nowProduct);
+    }
+//    string id, name, orderIDD;
+//    double unitPrice;
 
+
+//    for(int i=0;i<2;i++){
+//        readItemFromFile(id, orderIDD, name, unitPrice, 4 * itemNumber);
+//        productList[itemNumber]=new Product(id, name, unitPrice, "", 3);
+//        Customer *customer = listCustomer.findCustomerByID(orderIDD);
+//        Order *order = customer->getOrderById(orderIDD);
+//        order->addItem( productList[itemNumber]);
+//        itemNumber++;
+//    }
+//    for(int i=0;i<2;i++){
+//        productList[itemNumber]=new Product("1","1",i,"1",i);
+//        itemNumber++;
+//    }
+//int *x=new int();
+//    productList[0]=new Product();
+//    Product *testProduct;
+    if (1 == 1) {
         do {
             cout << "1: Add new customer: " << endl;
             cout << "2: Add new order to specific customer's orderList: " << endl;
@@ -121,8 +181,7 @@ int main() {
                             cout << "Country: " << endl;
                             getline(cin, country);
                         }
-                        Customer customer(id, firstName, lastName, phoneNumber, "", city, "", "", country);
-                        customerList.addCustomerToList(customer);
+                        listCustomer.creatNewCustomer(id, firstName, lastName, phoneNumber, city, country);
                         cout << "Action done" << endl;
                         break;
                     }
@@ -130,18 +189,15 @@ int main() {
                     case 2: {
 
                         bool isAdded = false;
-                        string orderId, customerId;
+                        string orderIdd, customerId;
                         cout << "Order's ID: " << endl;
-                        cin >> orderId;
+                        cin >> orderIdd;
                         cout << "Customer's ID: " << endl;
                         cin >> customerId;
-                        Order newOrder(orderId);
-                        for (Customer p: customerList.getCustomerList()) {
-                            if (p.getId() == customerId) {
-                                p.addOrder(newOrder);
-                                isAdded = true;
-                            }
-                        }
+                        Customer *p = listCustomer.findCustomerByCustomerID(customerId);
+                        p->createNewOrder(orderIdd);
+                        isAdded = true;
+
                         if (isAdded)
                             cout << "Add completed" << endl;
                         else {
@@ -151,14 +207,14 @@ int main() {
                     }
                     case 3: {
                         int choice;
-                        string id, name, orderID;
+                        string id, name, orderIDD;
                         double unitPrice;
                         bool isAdded = false;
                         cout << "1: Read From File: " << endl;
                         cout << "2: Read From keyboard" << endl;
                         cin >> choice;
                         if (choice == 1) {
-                            readItemFromFile(id, orderID, name, unitPrice, 4 * itemNumber);
+                            readItemFromFile(id, orderIDD, name, unitPrice, 4 * itemNumber);
                         } else {
                             cout << "Item's ID: " << endl;
                             cin >> id;
@@ -167,7 +223,7 @@ int main() {
                             cout << "Price: " << endl;
                             cin >> unitPrice;
                             cout << "Order's ID: " << endl;
-                            cin >> orderID;
+                            cin >> orderIDD;
                         }
                         cout << "This is a product or a Service? " << endl;
                         cout << "1: Product " << endl;
@@ -177,32 +233,19 @@ int main() {
                             int quantity;
                             cout << "The quantity of this product: " << endl;
                             cin >> quantity;
-                            Product newProduct(id, name, unitPrice, "", quantity);
-                            testProduct=&newProduct;
                             ///Method: Traverse for each customer in customerList and
                             /// For each customerList we find the Order in the Orderlist which is match the id of OrderId input
 
-                            for (Customer customerIndex: customerList.getCustomerList()) {        ///Traverse customerList
-                                for (Order orderIndex: customerIndex.getOrderList()) {      ///Traverse orderList
-                                    if (orderIndex.getId() == orderID) {                    ///If OrderId is matched
-                                        customerIndex.addItemToOrder(testProduct,
-                                                                     orderID);        ///ADD this item to that order
-                                        isAdded = true;
-                                    }
-                                }
-                            }
+                            Customer *customer = listCustomer.findCustomerByOrderID(orderIDD);
+                            Order *order = customer->getOrderById(orderIDD);
+                            order->createNewProduct(id, name, unitPrice, "", quantity);
+                            isAdded = true;
                         } else {
-//                        Service newItem(id, name, unitPrice, "");
-                            ///Method: Traverse for each customer in customerList and
-                            /// For each customerList we find the Order in the Orderlist which is match the id of OrderId input
-                            for (Customer customerIndex: customerList.getCustomerList()) {        ///Traverse customerList
-                                for (Order orderIndex: customerIndex.getOrderList()) {      ///Traverse orderList
-                                    if (orderIndex.getId() == orderID) {                    ///If OrderId is matchec
-//                                    customerIndex.addItem(newItem, orderID);        ///ADD this item to that order
-                                        isAdded = true;
-                                    }
-                                }
-                            }
+                            cout << "You're starting using this service!!!" << endl;
+                            Customer *customer = listCustomer.findCustomerByOrderID(orderIDD);
+                            Order *order = customer->getOrderById(orderIDD);
+                            order->createNewService(id, name, unitPrice, "");
+                            isAdded = true;
                         }
                         if (isAdded)
                             cout << "Add completed" << endl;
@@ -216,79 +259,78 @@ int main() {
                         cout << "City you want to find customer living there" << endl;
                         cin.ignore(1, '\n');
                         getline(cin, city);
-//    deleteSpace(city);          ///Change string to lowercase and has no space form
-//    changeStringToLowercase(city); ///Change string to lowercase and has no space form
-//                    for (Customer p: customerList) {
-//                        cityFromCustomer = p.getCity();
-//                        deleteSpace(cityFromCustomer); ///Change string to lowercase and has no space form
-//                        changeStringToLowercase(cityFromCustomer);///Change string to lowercase and has no space form
-//                        if (city == cityFromCustomer) {
-//                            numberCustomer++;
-//                        }
+                        //Nếu bị lỗi cin ở mấy phần dưới thì quay lại đây, lỗi nó ở đây
                         cout << "Number of customer living in: " << city << ": "
-                             << customerList.getTotalCustomerInCity(city) << endl;
+                             << listCustomer.getTotalCustomerInCity(city) << endl;
                         break;
                     }
+                        //"5: Show total price of an order "
                     case 5: {
                         string orderID;
                         cout << "Order's ID: " << endl;
                         cin >> orderID;
-                        Customer a = customerList.findCustomerByID(orderID);
-                        Order priceOfOrder = a.getOrderById(orderID);
-                        cout << priceOfOrder.calculatePriceOfOrder();
+                        Customer *a = listCustomer.findCustomerByOrderID(orderID);
+                        Order *priceOfOrder = a->getOrderById(orderID);
+                        double sum = priceOfOrder->calculatePriceOfOrder();
+                        cout << sum << endl;
                         break;
-
                     }
-                        //6: Show total money which a customer paid:
+//                        6: Show total money which a customer paid:
                     case 6: {
                         double sum = 0;
                         string customerID;
                         cout << "Customer ID: " << endl;
                         cin >> customerID;
-                        for (Customer customerIndex: customerList.getCustomerList()) {
-                            if (customerIndex.getId() == customerID) {
-                                cout << customerIndex.totalPriceOfCustomerPaid();
-                            }
-                        }
+                        Customer *customerIndex = listCustomer.findCustomerByCustomerID(customerID);
+                        sum = customerIndex->totalMoneyPaid();
                         cout << "Total money which this customer paid: " << sum << endl;
                         break;
                     }
-                        //7: Show total price of all orders:
-                    case 7: {
-                        double sum = 0;
-                        for (Customer customerIndex: customerList.getCustomerList()) {
-                            sum += customerIndex.totalPriceOfCustomerPaid();
-                        }
-                        cout << "Total price of all orders: " << sum << endl;
-                        break;
-                    }
-                        //8: Show Customer List: "
-                    case 8: {
-                        for (Customer a: customerList.getCustomerList()) {
-                            a.customerInfo();
-                        }
-                        break;
-
-                    }
 
 
-                    case 9: {
-                        string orderID;
-                        cout << "Order ID: ";
-                        cin.ignore(1, '\n');
-                        getline(cin, orderID);
-                        Customer a = findCustomerThroughOrderID(orderID, customerList.getCustomerList());
-                        a.showAllOrderOfEachCustomer();
-                        break;
-                    }
+
+////                        //7: Show total price of all orders:
+//////                    case 7: {
+//////                        double sum = 0;
+//////                        for (Customer customerIndex: customerList.getCustomerList()) {
+//////                            sum += customerIndex.totalPriceOfCustomerPaid();
+//////                        }
+//////                        cout << "Total price of all orders: " << sum << endl;
+//////                        break;
+//////                    }
+//////                        //8: Show Customer List: "
+//////                    case 8: {
+//////                        for (Customer a: customerList.getCustomerList()) {
+//////                            a.customerInfo();
+//////                        }
+//////                        break;
+//////
+//////                    }
+////
+////
+//////                    case 9: {
+//////                        string orderID;
+//////                        cout << "Order ID: ";
+//////                        cin.ignore(1, '\n');
+//////                        getline(cin, orderID);
+//////                        Customer a = findCustomerThroughOrderID(orderID, customerList.getCustomerList());
+//////                        a.showAllOrderOfEachCustomer();
+//////                        break;
+//////                    }
                         //10: Show Item List of an Order:
                     case 10: {
-                        string orderID;
-                        cout << "Order's ID: ";
-                        cin >> orderID;
-                        Customer customerByID = customerList.findCustomerByID(orderID);
-                        Order orderByID = customerByID.getOrderById(orderID);
-//                        orderByID.showItemList();
+
+
+                        string newId = "22";
+
+
+                        Customer *customerByID = listCustomer.findCustomerByOrderID(newId);
+
+                        Order *orderByID = customerByID->getOrderById(newId);
+
+                        orderByID->showItemList();
+
+
                         break;
                     }
                     default: {
@@ -306,11 +348,13 @@ int main() {
 
 
             }
+
         } while (option != 11);
+
 
     }
 
-};
+}
 
 
 
